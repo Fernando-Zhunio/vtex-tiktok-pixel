@@ -1,9 +1,9 @@
 {
-  "name": "YOURAPPNAME",
-  "vendor": "vtex",
-  "version": "0.0.1",
-  "title": "CHANGEME",
-  "description": "CHANGEME",
+  "name": "pixel-tiktok-app",
+  "vendor": "novicompu",
+  "version": "0.0.1-beta.1",
+  "title": "Pixel tiktok App",
+  "description": "Pixel tiktok App",
   "billingOptions": {
     "termsURL": "https://compliance.vtex.com/gdpr/policies/vtex-privacy-policy",
     "support": {
@@ -28,9 +28,9 @@
     "title": "YOUR APP NAME",
     "type": "object",
     "properties": {
-      "gtmId": {
+      "tiktokId": {
         "title": "SAMPLE FIELD",
-        "description": "Enter the ID (GTM-XXXX) from your Google Tag Manager",
+        "description": "Enter the ID from your pixel tiktok app",
         "type": "string"
       }
     }

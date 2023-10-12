@@ -5,18 +5,29 @@ export interface PixelMessage extends MessageEvent {
     | OrderPlacedData
     | OrderPlacedTrackedData
     | PageViewData
+    | LegacyProductViewData
     | ProductImpressionData
     | AddToCartData
-    | RemoveToCartData
+    | RemoveFromCartData
     | CartChangedData
     | HomePageInfo
     | ProductPageInfoData
     | SearchPageInfoData
     | UserData
     | CartIdData
+    | CartLoadedData
     | PromoViewData
     | PromotionClickData
-    | NewsletterSubscriptionData
+    | AddPaymentInfoData
+    | AddShippingInfoData
+    | SignUpData
+    | LoginData
+    | ShareData
+    | BeginCheckoutData
+    | ViewCartData
+    | RefundData
+    | AddToWishlistData
+    | SearchData
 }
 
 export interface EventData {
@@ -31,6 +42,12 @@ export interface PageInfoData extends EventData {
   accountName: string
   pageTitle: string
   pageUrl: string
+}
+
+export interface LegacyProductViewData extends EventData {
+  event: 'pageInfo'
+  eventName: 'vtex:pageInfo'
+  eventType: 'productView'
 }
 
 export interface UserData extends PageInfoData {
@@ -100,7 +117,7 @@ export interface AddToCartData extends EventData {
   items: CartItem[]
 }
 
-export interface RemoveToCartData extends EventData {
+export interface RemoveFromCartData extends EventData {
   event: 'removeFromCart'
   eventName: 'vtex:removeFromCart'
   items: CartItem[]
@@ -126,12 +143,14 @@ export interface ProductViewData extends EventData {
   event: 'productView'
   eventName: 'vtex:productView'
   product: Product
+  list?: string
 }
 
 export interface ProductClickData extends EventData {
   event: 'productClick'
   eventName: 'vtex:productClick'
   product: ProductSummary
+  position: number
   list?: string
 }
 
@@ -144,59 +163,204 @@ export interface ProductImpressionData extends EventData {
   list: string
 }
 
-export interface CartData extends EventData {
-  event: 'cart'
-  eventName: 'vtex:cart'
+export interface CartLoadedData extends EventData {
+  event: 'cartLoaded'
+  eventName: 'vtex:cartLoaded'
   orderForm: OrderForm
 }
 
 export interface PromoViewData extends EventData {
   event: 'promoView'
+  eventType: 'vtex:promoView'
   eventName: 'vtex:promoView'
   promotions: Promotion[]
 }
 
 export interface PromotionClickData extends EventData {
   event: 'promotionClick'
+  eventType: 'vtex:promotionClick'
   eventName: 'vtex:promotionClick'
   promotions: Promotion[]
 }
 
-export interface NewsletterSubscriptionData extends EventData {
-  event: 'newsletterSubscription'
-  eventName: 'vtex:newsletterSubscription'
-  name: string
-  email: string
-  phone: string
+export interface AddPaymentInfoData extends EventData {
+  event: 'addPaymentInfo'
+  eventType: 'vtex:addPaymentInfo'
+  eventName: 'vtex:addPaymentInfo'
+  payment: PaymentType
+  items: CartItem[]
 }
+
+export interface BeginCheckoutData extends EventData {
+  event: 'beginCheckout'
+  eventType: 'vtex:beginCheckout'
+  eventName: 'vtex:beginCheckout'
+  items: CartItem[]
+}
+
+export interface AddShippingInfoData extends EventData {
+  event: 'addShippingInfo'
+  eventType: 'vtex:addShippingInfo'
+  eventName: 'vtex:addShippingInfo'
+  items: CartItem[]
+  shippingTier: string
+  value: number
+}
+
+export interface ViewCartData extends EventData {
+  event: 'viewCart'
+  eventType: 'vtex:viewCart'
+  eventName: 'vtex:viewCart'
+  items: CartItem[]
+}
+
+export interface AddToWishlistData extends EventData {
+  event: 'addToWishlist'
+  eventType: 'vtex:addToWishlist'
+  eventName: 'vtex:addToWishlist'
+  items: {
+    product: ProductSummary
+  }
+  list: string
+}
+
+export interface RefundData extends EventData {
+  event: 'refund'
+  eventType: 'vtex:refund'
+  eventName: 'vtex:refund'
+  order: {
+    transactionId: string
+    tax: number
+    shipping: number
+    value: number
+    items: ProductOrder[]
+  }
+}
+
+export interface SearchData extends EventData {
+  event: 'search'
+  eventType: 'vtex:search'
+  eventName: 'vtex:search'
+  term: string
+}
+
+export interface ShareData extends EventData {
+  event: 'share'
+  eventType: 'vtex:share'
+  eventName: 'vtex:share'
+  method: string
+  contentType: string
+  itemId: string
+}
+
+export interface LoginData extends EventData {
+  event: 'login'
+  eventType: 'vtex:login'
+  eventName: 'vtex:login'
+  method: string
+}
+
+export interface SignUpData extends LoginData, EventData {
+  event: 'signUp'
+  eventType: 'vtex:signUp'
+  eventName: 'vtex:signUp'
+}
+
+type PromotionProduct = Pick<ProductSummary, 'productId' | 'productName'>
 
 interface Promotion {
   id?: string
   name?: string
   creative?: string
   position?: string
+  products?: PromotionProduct[]
+}
+
+interface CartItemAdditionalInfo {
+  brandName: string
+  brandId: string
 }
 
 interface CartItem {
+  id: string
+  productCategories: Record<string, string> | null
+  productCategoryIds?: string
+  additionalInfo: CartItemAdditionalInfo | null
   brand: string
   ean: string
   category: string
   detailUrl: string
   imageUrl: string
   name: string
+  skuName: string
   price: number
+  priceIsInt?: boolean
+  sellingPrice: number
   productId: string
   productRefId: string
   quantity: number
-  seller: string
-  sellerName: string
   skuId: string
+  referenceId: string // SKU reference id
   variant: string
+}
+
+interface Totalizer {
+  id: string
+  name: string
+  value: number
+}
+
+interface ClientProfileData {
+  email: string
+  firstName: string
+  lastName: string
+}
+
+interface Address {
+  addressId: string
+  postalCode: string
+  street: string
+  number: string
+  neighborhood: string
+  complement: string
+  city: string
+  state: string
+}
+
+interface DeliveryOption {
+  id: string
+  price: number
+  estimate: string
+  isSelected: boolean
+}
+
+interface Shipping {
+  selectedAddress: Address
+  deliveryOptions?: DeliveryOption[]
+}
+
+interface MarketingData {
+  coupon: string
+  utmCampaign: string
+  utmSource: string
+  utmMedium: string
+  utmiCampaign: string
+  utmiPage: string
+  utmiPart: string
 }
 
 export interface OrderForm {
   id: string
+  totalizers: Totalizer[]
+  sellers: Seller[]
+  salesChannel: string
   items: CartItem[]
+  canEditData: boolean
+  loggedIn: boolean
+  clientProfileData?: ClientProfileData
+  shipping?: Shipping
+  value: number
+  marketingData?: MarketingData
 }
 
 export interface Order {
@@ -336,11 +500,14 @@ interface ItemSummary {
 export interface Seller {
   commertialOffer: CommertialOffer
   sellerId: string
-  sellerName: string
+  sellerDefault: boolean
 }
 
 export interface CommertialOffer {
   Price: number
+  PriceWithoutDiscount: number
   ListPrice: number
   AvailableQuantity: number
 }
+
+export type ProductViewReferenceId = Array<Item['referenceId']>
