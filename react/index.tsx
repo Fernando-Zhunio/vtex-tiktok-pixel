@@ -28,9 +28,8 @@ export function handleEvents(e: PixelMessage) {
         value: data.items[0].price / 100,
       }
       ttq.track('AddToCart', sendData)
-      break;
+      break
     }
-
     case 'vtex:productView': {
       const data = e.data as ProductViewData
       const sendData = {
@@ -51,6 +50,7 @@ export function handleEvents(e: PixelMessage) {
       ttq.track('ViewContent', sendData)
     }
     case 'vtex:orderPlaced': {
+      console.log('vtex:orderPlaced', e)
       const data = e.data as OrderPlacedData
       const products = data.transactionProducts
       const sendData = {
@@ -64,25 +64,31 @@ export function handleEvents(e: PixelMessage) {
         currency: 'USD',
         value: data.transactionTotal,
       }
+      console.log({
+        email: data?.visitorContactInfo[0],
+        phone_number: data?.visitorContactPhone,
+      })
+      ttq.identify({
+        email: data?.visitorContactInfo[0],
+        phone_number: data?.visitorContactPhone,
+      });
       ttq.track('CompletePayment', sendData)
       break
     }
     case 'vtex:pageView': {
       if (count < 1) {
-        count++;
-        return;
-      };
+        count++
+        return
+      }
       ttq.track('PageView')
     }
-
     default: {
       break
     }
   }
 }
 
-let count = 0;
+let count = 0
 if (canUseDOM) {
-  window.addEventListener('message', handleEvents);
+  window.addEventListener('message', handleEvents)
 }
-
