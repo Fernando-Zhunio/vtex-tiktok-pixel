@@ -37,5 +37,7 @@ declare module 'vtex.render-runtime' {
     export const withRuntimeContext: <TOriginalProps extends unknown>(
       Component: ComponentType<TOriginalProps & RenderContextProps>
     ) => ComponentType<TOriginalProps>
-  }
-  
+
+    export function useRuntime(): any
+}
+

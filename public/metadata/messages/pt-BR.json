@@ -1,8 +1,11 @@
 {
-  "name": "",
-  "headline": "",
-  "overview": "",
-  "features": [],
+  "name": "Aplicativo Tiktok para VTEX",
+  "headline": "Integra sua loja com o Tiktok navegação e conversão para a plataforma",
+  "overview": "Usar o aplicativo Tiktok para rastrear os visitantes e as conversões da loja.",
+  "features": [
+    "Configura o aplicativo Tiktok para sua loja usando seus ajustes.",
+    "Envie todos os eventos de comércio eletrônico"
+  ],
   "additionalInformation": "",
   "websiteURL": "https://vtex.com/",
   "support": {

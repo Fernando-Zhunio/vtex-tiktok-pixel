@@ -3741,6 +3741,10 @@ normalize-path@^2.1.1:
   dependencies:
     remove-trailing-separator "^1.0.1"
 
+"novicompu.pixel-tiktok-app@https://devnovicompu--novicompu.myvtex.com/_v/private/typings/linked/v1/novicompu.pixel-tiktok-app@0.0.1-beta.1+build1698765467/public/@types/novicompu.pixel-tiktok-app":
+  version "0.0.1-beta.1"
+  resolved "https://devnovicompu--novicompu.myvtex.com/_v/private/typings/linked/v1/novicompu.pixel-tiktok-app@0.0.1-beta.1+build1698765467/public/@types/novicompu.pixel-tiktok-app#f753512c1ca613397f5f9812296a4b790329b89f"
+
 npm-run-path@^2.0.0:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/npm-run-path/-/npm-run-path-2.0.2.tgz#35a9232dfa35d7067b4cb2ddf2357b1871536c5f"
@@ -4943,9 +4947,9 @@ verror@1.10.0:
   version "0.0.0"
   resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.pixel-interfaces@1.1.1/public/_types/react#fa7a0347e046eab3dd768998fc9252b2c0dd5aef"
 
-"vtex.render-runtime@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.124.3/public/@types/vtex.render-runtime":
-  version "8.124.3"
-  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.124.3/public/@types/vtex.render-runtime#8158e34bd24b4a51cb5d463eeef4e37af626c2d5"
+"vtex.render-runtime@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.134.2/public/@types/vtex.render-runtime":
+  version "8.134.2"
+  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.134.2/public/@types/vtex.render-runtime#ae69e2b2a471291c6c6b155e17510150fbfc2d0e"
 
 w3c-hr-time@^1.0.1:
   version "1.0.1"

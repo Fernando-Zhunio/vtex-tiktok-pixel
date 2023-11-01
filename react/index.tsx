@@ -5,17 +5,12 @@ import {
   PixelMessage,
   ProductViewData,
 } from './typings/events'
-// import { useRuntime } from 'vtex.render-runtime'
 
 export default function () {
   return null
 }
 declare var ttq: any
 export function handleEvents(e: PixelMessage) {
-  // if (e?.data?.eventName) {
-  //   console.log(e?.data?.eventName, e)
-  //   localStorage.setItem(e.data.eventName, e.data.eventName)
-  // }
   switch (e?.data?.eventName) {
     case 'vtex:addToCart': {
       const data = e.data as AddToCartData
@@ -32,10 +27,8 @@ export function handleEvents(e: PixelMessage) {
         currency: 'USD',
         value: data.items[0].price / 100,
       }
-
-      // console.log('addToCart', { e, sendData })
       ttq.track('AddToCart', sendData)
-      break
+      break;
     }
 
     case 'vtex:productView': {
@@ -58,7 +51,6 @@ export function handleEvents(e: PixelMessage) {
       ttq.track('ViewContent', sendData)
     }
     case 'vtex:orderPlaced': {
-      // console.log('vtex:orderPlaced', e)
       const data = e.data as OrderPlacedData
       const products = data.transactionProducts
       const sendData = {
@@ -75,16 +67,13 @@ export function handleEvents(e: PixelMessage) {
       ttq.track('CompletePayment', sendData)
       break
     }
-
-    // case 'vtex:cartLoaded': {
-    //   console.log('vtex:cartLoaded', e)
-    //   break
-    // }
-
-    // case 'vtex:beginCheckout': {
-    //   console.log('vtex:beginCheckout', e)
-    //   break
-    // }
+    case 'vtex:pageView': {
+      if (count < 1) {
+        count++;
+        return;
+      };
+      ttq.track('PageView')
+    }
 
     default: {
       break
@@ -92,7 +81,8 @@ export function handleEvents(e: PixelMessage) {
   }
 }
 
+let count = 0;
 if (canUseDOM) {
-  window.addEventListener('message', handleEvents)
+  window.addEventListener('message', handleEvents);
 }
 
